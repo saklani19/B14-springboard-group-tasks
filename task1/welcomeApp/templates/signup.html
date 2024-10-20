@@ -5,49 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            text-align: center;
+        * {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 40px;
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        form {
-            display: inline-block;
-            text-align: left;
+
+        .div-container {
+            width: 80%;
         }
+        
+        button {
+            padding: 0.75em 1em;
+            color: white;
+            border: 0;
+            border-radius: 0.25em;
+            cursor: pointer;
+        }
+        
+        #btn1 {
+            background-color: rgb(16, 151, 30);
+        }
+
         label, input {
             font-size: 18px;
             display: block;
             margin: 10px 0;
         }
-        button {
-            padding: 10px 20px;
-            background-color: green;
-            color: white;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-        }
     </style>
 </head>
-<body>
-    <h1>Welcome to Skin Disease Diagnosis Page!!!</h1>
-    <h2>Sign up</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        
-        <label for="password_confirmation">Password confirmation:</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" required>
-        
-        <button type="submit">Sign up</button>
-    </form>
+<body class="container">
+    <div class="div-container">
+        <h1>Welcome to Skin Disease Diagnosis page</h1>
+        <hr>
+        <h2>Sign up</h2>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            
+            <label for="password_confirmation">Password confirmation:</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required>
+            
+            <button id="btn1" type="submit">Sign up</button>
+        </form>
+        <hr>
+    </div>
 </body>
 </html>
