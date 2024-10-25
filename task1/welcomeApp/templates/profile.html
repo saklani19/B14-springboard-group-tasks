@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <h1>Profile Dashboard</h1>
+    <style>
+        * {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .div-container {
+            width: 80%;
+        }
+    </style>
 </head>
-<body>
+<body class="container">
+    <div class="div-container">
+        <h1>Profile Dashboard</h1>
+        <hr>
+        <form>
+            <label for="imageUpload">Choose an image:</label>
+            <input type="file" id="imageUpload" name="image" accept="image/*">
+            <br><br>
+            <input type="button" value="Submit">
+        </form>
+    </div>
     
 </body>
 </html>
