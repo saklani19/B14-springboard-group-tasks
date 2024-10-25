@@ -32,7 +32,7 @@ def loginView(request):
 
 def signup(request):
     if(request.user.is_authenticated):
-        return redirect('/')
+        return redirect('/profile')
     if(request.method == "POST"):
         form = UserCreationForm(request.POST)
         if(form.is_valid()):
