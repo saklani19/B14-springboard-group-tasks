@@ -36,23 +36,32 @@
             display: block;
             margin: 10px 0;
         }
+
+        a {
+            text-decoration: none;
+            color: #E5E5E5;
+            background-color: #313131;
+            padding: 0.75em 1em;
+            margin: 0 0.2em;
+
+            border: 0px;
+            border-radius: 0.4em;
+        }
     </style>
 </head>
 <body class="container">
     <div class="div-container">
         <h1>Welcome to Skin Disease Diagnosis page</h1>
+        {{ msg }}
         <hr>
         <h2>Login</h2>
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
-            
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
             <button id="btn1" type="submit">Login</button>
         </form>
         <hr>
+        <a href="/" id="back">Back</a>
     </div>
 </body>
 </html>

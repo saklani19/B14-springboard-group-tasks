@@ -20,7 +20,8 @@ from welcomeApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name="home.html"),
+    path('', views.home, name="home"),
     path('login/', views.loginView, name='login'),
-    path('signup/', views.signup,name='signup'),
+    path('signup/', views.signup, name='signup'),
+    path('profile/', views.profile, name='profile'),
 ]
