@@ -24,12 +24,25 @@
     <div class="div-container">
         <h1>Profile Dashboard</h1>
         <hr>
-        <form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <label for="imageUpload">Choose an image:</label>
-            <input type="file" id="imageUpload" name="image" accept="image/*">
+            <input type="file" id="imageUpload" name="uploadImage" accept="image/*">
             <br><br>
-            <input type="button" value="Submit">
+            <button type="submit">Submit</button>
         </form>
+        <hr>
+        <div>
+            {% if img %}
+                <h2>Original Image</h2>
+                <img src="{{ img }}" alt="Original Image" height="500px" width="500px">
+            {% endif %}
+            <br><br>
+            {% if processed_img %}
+                <h2>Processed Image</h2>
+                <img src="{{ processed_img }}" alt="Processed Image" height="500px" width="500px">
+            {% endif %}
+        </div>
     </div>
     
 </body>
