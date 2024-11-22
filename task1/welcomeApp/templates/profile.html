@@ -34,13 +34,16 @@
         <hr>
         <div>
             {% if img %}
-                <h2>Original Image</h2>
-                <img src="{{ img }}" alt="Original Image" height="500px" width="500px">
+                <h2>Disease Image</h2>
+                <img src="{{ img }}" alt="Original Image" height="200px" width="200px">
             {% endif %}
             <br><br>
-            {% if processed_img %}
-                <h2>Processed Image</h2>
-                <img src="{{ processed_img }}" alt="Processed Image" height="500px" width="500px">
+            {% if obj1 %}
+                <h2>{{ obj1 }}</h2>
+            {% endif %}
+            <br><br>
+            {% if obj2 %}
+                <h2>{{ disease_name }}</h2>
             {% endif %}
         </div>
     </div>

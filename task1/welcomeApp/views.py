@@ -1,10 +1,15 @@
 import cv2
 import os
+import numpy as np
+import joblib
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate
 from django.core.files.storage import FileSystemStorage
+
+model = joblib.load(os.path.join(os.path.dirname(__file__), 'svm_rbf_model_svc.joblib'))
+# label_encoder = joblib.load(os.path.join(os.path.dirname(__file__), 'label_encoder.joblib'))  # Load label encoder
 
 
 # Create your views here.
@@ -52,34 +57,40 @@ def signup(request):
         return render(request,'signup.html',{'form':form})
 
 def profile(request):
-    # initialise url variables
     img_url = None
-    processed_img_url = None
-
-    if request.method == "POST":
-        if request.FILES.get('uploadImage'):
+    result1 = None
+    result2 = None
+    
+    if(request.method=="POST"):
+        if(request.FILES.get('uploadImage')):
             img_name = request.FILES['uploadImage']
+            # create a variable for our FileSystem package
             fs = FileSystemStorage()
-            filename = fs.save(img_name.name, img_name)
+            filename = fs.save(img_name.name,img_name)
+            #urls
             img_url = fs.url(filename)
-
-            uploaded_img_path = fs.path(filename)
-            processed_img_path = process_image_with_opencv(uploaded_img_path)
-
-            processed_filename = processed_img_path.split('/')[-1]
-            processed_fs = FileSystemStorage()
-            processed_fs.save(processed_filename, open(processed_img_path, 'rb'))
-            processed_img_url = processed_fs.url(processed_filename)
-
-    return render(request, 'profile.html', {'img': img_url, 'processed_img': processed_img_url})
-
-def process_image_with_opencv(input_image_path):
-    img = cv2.imread(input_image_path)
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
-    base_name, ext = os.path.splitext(input_image_path)
-    processed_image_path = f"{base_name}_processed{ext}"
-    
-    cv2.imwrite(processed_image_path, gray_img)
-
-    return processed_image_path
+            #find the path of the image
+            img_path = fs.path(filename)
+ 
+            #start implementing the opencv condition
+            img = cv2.imread(img_path,cv2.IMREAD_COLOR)
+            # Convert to grayscale (single channel)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            #resize the image for a constant use
+            img = cv2.resize(img,(64,64))
+            #flatten the image for the better clear shape of the disease spread on the skin
+            img = img.flatten()
+            #using the normalization predefined function to find the value
+            img = np.expand_dims(img,axis=0)
+ 
+            #we sill start executing with our model
+            predict = model.predict(img)[0]
+            
+            ''''''
+            skin_disease_names = ['Cellulitis','Impetigo','Athlete Foot','Nail Fungus','Ringworm','Cutaneous Larva Migrans','Chickenpox','Shingles']
+            # diagnosis = ['']
+ 
+            result1 = skin_disease_names[predict]
+            # result2 = diagnosis[predict]
+ 
+    return render(request,'profile.html',{'img':img_url,'obj1':result1,'obj2':result2})
